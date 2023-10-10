@@ -134,47 +134,47 @@ db.restaurants.find({ $or: [ {"cuisine": {$nin: ["American ", "Chinese"]}}, {"na
     #+end_src
 22. Escribe una función find() para encontrar el ID del restaurante, el nombre y las calificaciones de los restaurantes que obtuvieron una calificación de "A" y obtuvieron una puntuación de 11 en un ISODate "2014-08-11T00: 00: 00Z" entre muchas de las fechas de la encuesta. .
     #+begin_src js
-
+db.restaurants.find({"grades": {$elemMatch: {"grade": "A", "score": 11, "date": ISODate("2014-08-11T00:00:00Z")}}},{"restaurant_id": 1,"name": 1,"grades": 1})
     #+end_src
 23. Escribe una función find() para encontrar el ID del restaurante, el nombre y las calificaciones de aquellos restaurantes donde el segundo elemento de la matriz de calificaciones contiene una calificación de "A" y una puntuación de 9 en un ISODate "2014-08-11T00: 00: 00Z".
     #+begin_src js
-
+db.restaurants.find({"grades": {$elemMatch: {"grade": "A", "score": 9, "date": ISODate("2014-08-11T00:00:00Z")}}},{"restaurant_id": 1,"name": 1,"grades": 1})
     #+end_src
 24. Escribe una función find() para encontrar el ID del restaurante, el nombre, la dirección y la ubicación geográfica para aquellos restaurantes donde el segundo elemento de la matriz de coordenadas contiene un valor que sea más de 42 y hasta 52.
     #+begin_src js
-
+db.restaurants.find("address.coord.1": {$gt: 42, $lte: 52}}, {"restaurant_id": 1, "name": 1, "address.coord": 1})
     #+end_src
 25. Escribe una función find() para organizar el nombre de los restaurantes en orden ascendente junto con todas las columnas.
     #+begin_src js
-
+db.restaurants.find().sort({"name":1})
     #+end_src
 26. Escribe una función find() para organizar el nombre de los restaurantes en orden descendente junto con todas las columnas.
     #+begin_src js
-
+db.restaurants.find().sort({"name":-1})
     #+end_src
 27. Escribe una función find() para organizar el nombre de la cocina en orden ascendente y para ese mismo distrito de cocina debe estar en orden descendente.
     #+begin_src js
-
+db.restaurants.find().sort({"cuisine":1, "borough":-1})
     #+end_src
 28. Escribe una función find() para saber si todas las direcciones contienen la calle o no.
     #+begin_src js
-
+db.restaurants.find({"address.street": {$exists: true}})
     #+end_src
 29. Escribe una función find() que seleccionará todos los documentos de la colección de restaurantes donde el valor del campo coord es Double.
     #+begin_src js
-
+db.restaurants.find({"address.coord": {$type: "double"}})
     #+end_src
 30. Escribe una función find() que seleccionará el ID del restaurante, el nombre y las calificaciones para esos restaurantes que devuelve 0 como resto después de dividir la puntuación por 7.
     #+begin_src js
-
+db.restaurants.find({"grades": {$elemMatch: {"score": { $mod: [7, 0] }}}},{"_id": 1,"name": 1,"grades": 1})
     #+end_src
 31. Escribe una función find() para encontrar el nombre del restaurante, el municipio, la longitud y la actitud y la cocina de aquellos restaurantes que contienen "mon" como tres letras en algún lugar de su nombre.
     #+begin_src js
-
+db.restaurants.find({"name": /mon{1}/}, {"name": 1, "borough": 1, "address.coord": 1, "cuisine": 1})
     #+end_src
 32. Escribe una función find() para encontrar el nombre del restaurante, el distrito, la longitud y la latitud y la cocina de aquellos restaurantes que contienen 'Mad' como las primeras tres letras de su nombre.
     #+begin_src js
-
+db.restaurants.find({"name": /^Mad/}, {"name": 1, "borough": 1, "address.coord": 1, "cuisine": 1})
     #+end_src
 * PT 2.
 
